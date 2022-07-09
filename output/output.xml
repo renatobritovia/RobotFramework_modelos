@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.10.5 on win32)" generated="20220709 00:50:52.643" rpa="false" schemaversion="3">
+<suite id="s1" name="TC API1" source="C:\Users\2160001154\OneDrive - Via Varejo S.A\Documentos\Automacao\RobotFramework_modelos\Tests\TC_API1.robot">
+<test id="s1-t1" name="TC01 - Consultar Prazo Entrega de Mercadoria" line="16">
+<kw name="Quando eu acesso a api ConsultaPrazoEntrega" library="steps_API">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>mysession</arg>
+<arg>${base_url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220709 00:50:54.028" level="INFO">Creating Session using : alias=mysession, url=http://hlg-oms-corporativo.api-cnova.com.br, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220709 00:50:54.027" endtime="20220709 00:50:54.028"/>
+</kw>
+<kw name="Load JSON From File" library="JSONLibrary">
+<var>${body_json}</var>
+<arg>post.txt</arg>
+<doc>Load JSON from file.</doc>
+<msg timestamp="20220709 00:50:54.043" level="INFO">${body_json} = {'IdSku': 7313, 'Cnpjs': ['33041260119641']}</msg>
+<status status="PASS" starttime="20220709 00:50:54.028" endtime="20220709 00:50:54.043"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=${bearerToken}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220709 00:50:54.044" level="INFO">${headers} = {'Authorization': '"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.HEAFzxWNRFJeyY7PCPzhqtB0UX68R6__sfrxQccRaFs"', 'Content-Type'...</msg>
+<status status="PASS" starttime="20220709 00:50:54.043" endtime="20220709 00:50:54.044"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>mysession</arg>
+<arg>${endpoint}</arg>
+<arg>json=${body_json}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220709 00:50:54.167" level="INFO">POST Request : url=http://hlg-oms-corporativo.api-cnova.com.br/inventario/v3/prazoemmassa 
+ path_url=/inventario/v3/prazoemmassa 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': '"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.HEAFzxWNRFJeyY7PCPzhqtB0UX68R6__sfrxQccRaFs"', 'Content-Type': 'application/json', 'Content-Length': '44'} 
+ body=b'{"IdSku": 7313, "Cnpjs": ["33041260119641"]}' 
+ </msg>
+<msg timestamp="20220709 00:50:54.167" level="INFO">POST Response : url=http://hlg-oms-corporativo.api-cnova.com.br/inventario/v3/prazoemmassa 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-cache', 'Pragma': 'no-cache', 'Content-Type': 'application/json; charset=utf-8', 'Expires': '-1', 'Server': 'Microsoft-IIS/8.5', 'X-Correlation-Id': 'd6083bac-72d6-4f75-94e5-92e0d0157ed9', 'X-AspNet-Version': '4.0.30319', 'X-Powered-By': 'ASP.NET', 'X-SERVER': 'APP-TRACKING', 'Date': 'Sat, 09 Jul 2022 03:50:54 GMT', 'Content-Length': '338'} 
+ body={"idSku":7313,"prazosEntrega":[{"idFilial":228,"cnpjFilial":"33041260119641","cnpjAbastecimento":"33041260094711","uf":"SP","prazoHorasEntrega":96,"prazoDiasEntrega":4,"tipoModalidade":0,"estoqueRestricao":"WN","idTipoFilial":1,"quantidadeDisponivel":1233}],"valido":true,"mensagens":[],"protocolo":"d6083bac-72d6-4f75-94e5-92e0d0157ed9"} 
+ </msg>
+<msg timestamp="20220709 00:50:54.167" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220709 00:50:54.044" endtime="20220709 00:50:54.167"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20220709 00:50:54.168" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220709 00:50:54.168" endtime="20220709 00:50:54.168"/>
+</kw>
+<status status="PASS" starttime="20220709 00:50:54.027" endtime="20220709 00:50:54.168"/>
+</kw>
+<kw name="Entao a api finaliza com response" library="steps_API">
+<arg>2001</arg>
+<kw name="Convert To String" library="BuiltIn">
+<var>${status_code}</var>
+<arg>${response.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20220709 00:50:54.170" level="INFO">${status_code} = 200</msg>
+<status status="PASS" starttime="20220709 00:50:54.170" endtime="20220709 00:50:54.170"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${status_code}</arg>
+<arg>${retcode}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20220709 00:50:54.171" level="FAIL">200 != 2001</msg>
+<status status="FAIL" starttime="20220709 00:50:54.171" endtime="20220709 00:50:54.171"/>
+</kw>
+<status status="FAIL" starttime="20220709 00:50:54.169" endtime="20220709 00:50:54.172"/>
+</kw>
+<status status="FAIL" starttime="20220709 00:50:54.026" endtime="20220709 00:50:54.173">200 != 2001</status>
+</test>
+<status status="FAIL" starttime="20220709 00:50:52.646" endtime="20220709 00:50:54.178"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="TC API1">TC API1</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
