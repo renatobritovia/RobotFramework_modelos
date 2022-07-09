@@ -14,14 +14,19 @@ ${bearerToken}    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0N
 
 *** Keywords ***
 Dado que eu possua um SKU 
+    [Arguments]  ${i_sku}
+    Set Test Variable  ${i_sku}
 
 E que eu possua um CNPJ Filial
+    [Arguments]  ${i_cnpj}
+    Set Test Variable  ${i_cnpj}
+
 
 Quando eu acesso a api ConsultaPrazoEntrega
 
     create session  mysession   ${base_url}
 
-    ${body_json}=   load json from file  post.txt 
+    ${body_json}=   load json from file  InputFiles/post_API1.txt 
     ${headers}      create dictionary   Authorization=${bearerToken}    Content-Type=application/json
 
     ${response}=    POST On Session  mysession  ${endpoint}  json=${body_json}   headers=${headers}
